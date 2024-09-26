@@ -19,9 +19,13 @@ const Book = require('./models/book');
 
 const memberRoutes = require('./routes/member');
 const bookRoutes = require('./routes/book');
+const borrowRoutes = require('./routes/borrow');
+const returnRoutes = require('./routes/return');
 
 app.use('/api/members', memberRoutes);
 app.use('/api/books', bookRoutes);
+app.use('/api/borrow', borrowRoutes);
+app.use('/api/return', returnRoutes);
 
 sequelize.sync({force:true}).then(() => {
     console.log('Database dan Table berhasil dibuat');

@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Book = require('../models/book');
+const sequelize = require('../config/database');
+const {Op} = require('sequelize');
 
 // mengambil semua buku
 router.get('/', async (req, res) => {
@@ -52,6 +54,22 @@ router.post('/', async (req, res) => {
         res.status(201).json({ message: 'Data book berhasil ditambahkan' });
     } catch (error) {
         res.status(500).json({ error: error.message });
+    }
+});
+
+router.get('/available', async (req, res) => {
+    try{
+        // buku yg sedang tidak dipinjam
+        const availableBooks = await Book.findAll({
+            where: {
+                id:{
+                    [Op.notIn]: sequelize.literal(`SELECT bookId FROM borrows WHERE returnDate IS NULL`)
+                }
+            }
+        });
+        res.json(availableBooks);
+    }catch (error){
+        res.status(500).json({error: error.message});
     }
 });
 

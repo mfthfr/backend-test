@@ -44,7 +44,84 @@
             }
           }
         }
+      },
+      "/borrow": {
+        "post": {
+            "summary": "Borrow a book",
+            "parameters": [
+            {
+                "in": "body",
+                "name": "borrow",
+                "description": "Borrowing details",
+                "required": true,
+                "schema": {
+                "$ref": "#/definitions/Borrow"
+                }
+            }
+            ],
+            "responses": {
+            "201": {
+                "description": "Borrowing success"
+            }
+            }
+        }
+      },
+      "/return": {
+        "post": {
+            "summary": "Return a book",
+            "parameters": [
+            {
+                "in": "body",
+                "name": "return",
+                "description": "Returning details",
+                "required": true,
+                "schema": {
+                "$ref": "#/definitions/Return"
+                }
+            }
+            ],
+            "responses": {
+            "200": {
+                "description": "Returning success"
+            }
+            }
+        }
+      }
+    },
+    "definitions": {
+      "Borrow": {
+        "type": "object",
+        "properties": {
+          "memberId": {
+            "type": "string",
+            "example": "M001"
+          },
+          "bookId": {
+            "type": "string",
+            "example": "JK-45"
+          },
+          "borrowDate": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "Return": {
+        "type": "object",
+        "properties": {
+          "memberId": {
+            "type": "string",
+            "example": "M001"
+          },
+          "bookId": {
+            "type": "string",
+            "example": "JK-45"
+          },
+          "returnDate": {
+            "type": "string",
+            "format": "date"
+          }
+        }
       }
     }
   }
-  

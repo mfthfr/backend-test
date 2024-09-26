@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Member = require('../models/member');
+const {Op} = require('sequelize');
+
 
 // mengambil semua member
 router.get('/', async (req, res) => {
@@ -34,6 +36,30 @@ router.post('/', async (req, res) => {
         res.status(201).json({ message: 'Data member berhasil ditambahkan.' });
     } catch (error) {
         res.status(500).json({ error: error.message });
+    }
+});
+
+router.get('/borrowed', async (req, res) => {
+    try{
+        const members = await Member.findAll({
+            include:[
+                {
+                    model: Borrow,
+                    where: {returnDate: {[Op.is]: null}},
+                    required: false
+                }
+            ]
+        });
+
+        const result = members.map(member => ({
+            id: member.id, 
+            name: member.name,
+            borrowedBooksCount: member.Borrows.length
+        }));
+
+        res.json(result);
+    }catch (error){
+        res.status(500).json({error: error.message});
     }
 });
 
