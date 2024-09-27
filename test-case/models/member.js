@@ -1,4 +1,5 @@
 const {DataTypes} = require('sequelize');
+const Borrow = require('./borrow');
 const sequelize = require('../config/database');
 
 const Member = sequelize.define('Member', {
@@ -11,5 +12,7 @@ const Member = sequelize.define('Member', {
         allowNull: false,
     },
 });
+
+Member.hasMany(Borrow, {foreignKey: 'memberId' });
 
 module.exports = Member;

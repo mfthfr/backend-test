@@ -5,7 +5,7 @@ const Member = require('./member');
 
 const Borrow = sequelize.define('Borrow', {
   memberId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: false
   },
   bookId: {
@@ -24,6 +24,12 @@ const Borrow = sequelize.define('Borrow', {
 
 // Asosiasi dengan model Book dan Member
 Borrow.belongsTo(Book, { as: 'book', foreignKey: 'bookId' });
-Borrow.belongsTo(Member, { as: 'member', foreignKey: 'memberId' });
+// Borrow.belongsTo(Member, { as: 'member', foreignKey: 'memberId' });
+
+Borrow.associate = (models) => {
+    Borrow.belongsTo(models.Member, {
+        foreignKey: "memberId"
+    });
+}
 
 module.exports = Borrow;

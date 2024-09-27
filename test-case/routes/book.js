@@ -58,18 +58,31 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/available', async (req, res) => {
-    try{
-        // buku yg sedang tidak dipinjam
-        const availableBooks = await Book.findAll({
-            where: {
-                id:{
-                    [Op.notIn]: sequelize.literal(`SELECT bookId FROM borrows WHERE returnDate IS NULL`)
-                }
+    try {
+        const books = await Book.findAll({
+            attributes: {
+                include: [
+                    // Hitung jumlah buku yang sedang dipinjam
+                    [sequelize.literal(`(
+                        SELECT COUNT(*)
+                        FROM borrows AS borrow
+                        WHERE
+                            borrow.bookId = Book.code
+                            AND borrow.returnDate IS NULL
+                    )`), 'borrowedCount'],
+                ]
             }
         });
+
+        // Periksa stok buku yang tersedia
+        const availableBooks = books.map(book => ({
+            ...book.toJSON(),
+            availableStock: book.stock - book.dataValues.borrowedCount
+        }));
+
         res.json(availableBooks);
-    }catch (error){
-        res.status(500).json({error: error.message});
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 });
 

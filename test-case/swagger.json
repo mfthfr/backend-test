@@ -45,6 +45,16 @@
           }
         }
       },
+      "/books/available": {
+        "get": {
+        "summary": "Get available books with current stock",
+        "responses": {
+            "200": {
+            "description": "A list of available books and their stock."
+            }
+        }
+        }
+    },
       "/borrow": {
         "post": {
             "summary": "Borrow a book",
@@ -66,6 +76,16 @@
             }
         }
       },
+      "/members/borrowed": {
+        "get": {
+        "summary": "Get all members with their borrowed book count",
+        "responses": {
+            "200": {
+            "description": "A list of members and the number of books they are currently borrowing."
+            }
+        }
+        }
+    },
       "/return": {
         "post": {
             "summary": "Return a book",
