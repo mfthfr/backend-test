@@ -10,14 +10,6 @@
     "schemes": ["http"],
     "paths": {
       "/members": {
-        "get": {
-          "summary": "Get all members",
-          "responses": {
-            "200": {
-              "description": "A list of members."
-            }
-          }
-        },
         "post": {
           "summary": "Create a new member",
           "responses": {
@@ -25,22 +17,30 @@
               "description": "Member created successfully."
             }
           }
+        },
+        "get": {
+          "summary": "Get all members",
+          "responses": {
+            "200": {
+              "description": "A list of members."
+            }
+          }
         }
       },
       "/books": {
-        "get": {
-          "summary": "Get all books",
-          "responses": {
-            "200": {
-              "description": "A list of books."
-            }
-          }
-        },
         "post": {
           "summary": "Add a new book",
           "responses": {
             "201": {
               "description": "Book added successfully."
+            }
+          }
+        },
+        "get": {
+          "summary": "Get all books",
+          "responses": {
+            "200": {
+              "description": "A list of books."
             }
           }
         }

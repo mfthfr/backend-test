@@ -9,7 +9,7 @@ const Borrow = sequelize.define('Borrow', {
     allowNull: false
   },
   bookId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: false
   },
   borrowDate: {
@@ -24,8 +24,6 @@ const Borrow = sequelize.define('Borrow', {
 
 // Asosiasi dengan model Book dan Member
 Borrow.belongsTo(Book, { as: 'book', foreignKey: 'bookId' });
-// Borrow.belongsTo(Member, { as: 'member', foreignKey: 'memberId' });
-
 Borrow.associate = (models) => {
     Borrow.belongsTo(models.Member, {
         foreignKey: "memberId"
